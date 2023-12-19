@@ -1,0 +1,32 @@
+{
+    "description": "PDO connection",
+    "type": "library",
+    "name": "baezeta/database-connection",
+    "license": "MIT",
+    "require": {
+        "vlucas/phpdotenv": "^5.6",
+        "symfony/var-dumper": "^6.4"
+    },
+    "require-dev": {
+        "phpstan/phpstan": "^1.10",
+        "phpunit/phpunit": "^10.5",
+        "friendsofphp/php-cs-fixer": "^3.41"
+    },
+    "autoload": {
+        "psr-4": {
+            "Baezeta\\Psql\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "auto": "composer dump-autoload -o",
+        "tests": "phpunit --color=always --testdox tests/",
+        "stan": "vendor/bin/phpstan analyse src --level 5",
+        "fixer": "php ./vendor/bin/php-cs-fixer fix src/ --diff",
+        "fixer-test": "php ./vendor/bin/php-cs-fixer fix tests/ --diff"
+    }
+}
