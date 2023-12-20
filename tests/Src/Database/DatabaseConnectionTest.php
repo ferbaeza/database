@@ -49,8 +49,10 @@ class DatabaseConnectionTest extends TestCase
 
         $connection = DatabaseConnection::addConnection($test);
         $connection = DatabaseConnection::addConnection($dto);
-        $connection = DatabaseConnection::connect($dto->database);
+        $connection = DatabaseConnection::connect('pgsql');
+        $this->assertEquals('pgsql', $connection->getDriverName());
         $this->assertTrue($connection->getDriver() instanceof \PDO);
+
     }
 
 }
