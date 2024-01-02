@@ -1,15 +1,14 @@
 <?php
 
-namespace Tests\Src\Database;
+namespace Tests\Src\Connector;
 
 use Tests\TestCase;
-use Baezeta\Psql\Database\ConnectorDTO;
-use Baezeta\Psql\Database\DatabaseConnection;
+use Baezeta\Psql\Connect\Connector\ConnectorDTO;
+use Baezeta\Psql\Connect\Connector\DatabaseConnection;
 
 class DatabaseConnectionTest extends TestCase
 {
-    /** @test*/
-    public function deberia_connectar_con_la_base_datos_por_defecto()
+    public function newConnection()
     {
         $dto = new ConnectorDTO(
             driver: 'pgsql',
@@ -19,11 +18,18 @@ class DatabaseConnectionTest extends TestCase
             username: 'zataca',
             password: 'zataca',
         );
+    
+        $connection = new DatabaseConnection();
+        $connection->addConnection($dto)
+            ->connect();
+        return $connection;
+    }
 
-        $connection = DatabaseConnection::addConnection($dto);
-        $connection = DatabaseConnection::connect();
+    /** @test*/
+    public function deberia_connectar_con_la_base_datos_por_defecto()
+    {
+        $connection = $this->newConnection();
         $this->assertTrue($connection->getDriver() instanceof \PDO);
-
     }
 
     /** @test*/
@@ -47,12 +53,13 @@ class DatabaseConnectionTest extends TestCase
             password: 'zataca',
         );
 
-        $connection = DatabaseConnection::addConnection($test);
-        $connection = DatabaseConnection::addConnection($dto);
-        $connection = DatabaseConnection::connect('pgsql');
+        $connection = new DatabaseConnection();
+        $connection->addConnection($test)
+            ->addConnection($dto)
+            ->connect('pgsql');
+
         $this->assertEquals('pgsql', $connection->getDriverName());
         $this->assertTrue($connection->getDriver() instanceof \PDO);
-
     }
 
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Baezeta\Psql\Database;
+namespace Baezeta\Psql\Connect\Connector;
 
 class ConnectorDTO
 {
@@ -11,10 +11,6 @@ class ConnectorDTO
         public readonly string $database,
         public readonly string $username,
         public readonly string $password,
-        public readonly string $charset = 'utf8',
-        public readonly bool $prefix_indexes = true,
-        public readonly string $schema = 'public',
-        public readonly string $sslmode = 'prefer'
     ) {
     }
 }
