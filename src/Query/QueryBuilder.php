@@ -29,8 +29,6 @@ class QueryBuilder
         return $response;
     }
 
-
-
     public function setModel(Model $model): self
     {
         $this->model = $model;

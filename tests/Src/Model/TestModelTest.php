@@ -15,7 +15,6 @@ class TestModelTest extends TestCase
         $model->column2 = 21;
         $model->save();
 
-        // dd($model->all());
         $this->assertEquals(1,1);
         // dd($model->setConnection(DBConnection::getConnector()));
     }

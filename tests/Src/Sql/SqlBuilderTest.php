@@ -18,9 +18,10 @@ class SqlBuilderTest extends TestCase
     /** @test*/
     public function deberia_retornar_una_sentencia_select()
     {
+
         $sql = new SqlBuilder();
         $response = $sql->table('test')
-            ->select('column1', 'Lucas');
+            ->select('column2', '2');
 
         $this->assertEquals(count($response), 1);
     }

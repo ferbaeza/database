@@ -13,7 +13,6 @@ class BusquedaClaseTest extends TestCase
     public function findClass()
     {
         $schemas = Finder::findSchemas();
-        dd($schemas);
         $this->assertTrue(is_array($schemas));
         $this->assertCount(5, $schemas);
     }
