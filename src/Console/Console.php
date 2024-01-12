@@ -27,7 +27,7 @@ class Console
     public function doWrite(string $message, bool $newline = true)
     {
         $file = fopen(self::FLUSH, 'w');
-        $log = fopen(self::PERMANENT, 'w');
+        $log = fopen(self::PERMANENT, 'a+');
         if ($file) {
             if ($newline) {
                 $message .= \PHP_EOL;
