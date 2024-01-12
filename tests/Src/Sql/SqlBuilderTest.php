@@ -2,7 +2,7 @@
 
 namespace Tests\Src\Sql;
 
-use Tests\Tests\DBConnection;
+use Tests\Varios\DBConnection;
 use PHPUnit\Framework\TestCase;
 use Baezeta\Psql\Sql\SqlBuilder;
 
@@ -18,10 +18,10 @@ class SqlBuilderTest extends TestCase
     /** @test*/
     public function deberia_retornar_una_sentencia_select()
     {
-        $sql = new SqlBuilder($this->connection);
+        $sql = new SqlBuilder();
         $response = $sql->table('test')
-                    ->select('nombre', 'Lucas');
+            ->select('column1', 'Lucas');
 
-        $this->assertEquals(count($response), 2);
+        $this->assertEquals(count($response), 1);
     }
 }

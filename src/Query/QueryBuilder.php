@@ -4,15 +4,19 @@ namespace Baezeta\Psql\Query;
 
 use PDO;
 use PDOStatement;
-use Baezeta\Psql\Connect\Connector\DatabaseConnection;
 use Baezeta\Psql\Model\Model;
+use Baezeta\Psql\Database\DatabasePSQLConnection;
 
 class QueryBuilder 
 {
-    protected ?DatabaseConnection $connection;
+    protected ?DatabasePSQLConnection $connection;
     protected ?string $connectionName = null;
     protected Model $model;
 
+    public function __construct()
+    {
+        $this->connection = new DatabasePSQLConnection();
+    }
 
     public function prepareStatement(string $sql= null, array $params =[]): array
     {
@@ -25,11 +29,7 @@ class QueryBuilder
         return $response;
     }
 
-    public function setConnection(DatabaseConnection $pdo): self
-    {
-        $this->connection = $pdo;
-        return $this;
-    }
+
 
     public function setModel(Model $model): self
     {

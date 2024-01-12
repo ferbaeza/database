@@ -3,14 +3,25 @@
 namespace Tests\Src\Connector;
 
 use Tests\TestCase;
-use Baezeta\Psql\Connect\Connector\ConnectorDTO;
-use Baezeta\Psql\Connect\Connector\DatabaseConnection;
+use Baezeta\Psql\Database\DatabasePSQLConnection;
+use Baezeta\Psql\Database\Connector\ConnectorDTO;
+use Baezeta\Psql\Database\Connector\Constants\DeafultConnector;
 
 class DatabaseConnectionTest extends TestCase
 {
+    /** @test */
     public function newConnection()
     {
-        $dto = new ConnectorDTO(
+        $connection = new DatabasePSQLConnection();
+        $this->assertEquals(DeafultConnector::DATABASE, $connection->getCurrentConnection());
+        $this->assertTrue($connection->getDriver() instanceof \PDO);
+        // dd($connection->getCurrentConnection());
+    }
+    
+    /** @test*/
+    public function deberia_connectar_con_la_base_datos_por_defecto()
+    {
+        $fastphp = new ConnectorDTO(
             driver: 'pgsql',
             host: 'postgres',
             port: '5432',
@@ -18,24 +29,17 @@ class DatabaseConnectionTest extends TestCase
             username: 'zataca',
             password: 'zataca',
         );
-    
-        $connection = new DatabaseConnection();
-        $connection->addConnection($dto)
-            ->connect();
-        return $connection;
-    }
 
-    /** @test*/
-    public function deberia_connectar_con_la_base_datos_por_defecto()
-    {
-        $connection = $this->newConnection();
+        $connection = new DatabasePSQLConnection();
+        $connection->addConnection($fastphp)
+            ->connect();
         $this->assertTrue($connection->getDriver() instanceof \PDO);
     }
 
     /** @test*/
     public function deberia_agregar_una_segunda_conexion_y_connectar_con_la_base_datos_por_defecto()
     {
-        $test = new ConnectorDTO(
+        $tests = new ConnectorDTO(
             driver: 'pgsql',
             host: 'postgres',
             port: '5432',
@@ -44,7 +48,7 @@ class DatabaseConnectionTest extends TestCase
             password: 'zataca',
         );
 
-        $dto = new ConnectorDTO(
+        $fastphp = new ConnectorDTO(
             driver: 'pgsql',
             host: 'postgres',
             port: '5432',
@@ -53,12 +57,15 @@ class DatabaseConnectionTest extends TestCase
             password: 'zataca',
         );
 
-        $connection = new DatabaseConnection();
-        $connection->addConnection($test)
-            ->addConnection($dto)
-            ->connect('pgsql');
+        $connection = new DatabasePSQLConnection();
+        $connection->addConnection($tests)
+            ->addConnection($fastphp)
+            ->connect($fastphp->database);
 
-        $this->assertEquals('pgsql', $connection->getDriverName());
+
+        $connection->connect($tests->database);
+
+        $this->assertEquals($tests->database, $connection->getCurrentConnection());
         $this->assertTrue($connection->getDriver() instanceof \PDO);
     }
 

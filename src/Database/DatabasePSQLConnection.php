@@ -1,11 +1,14 @@
 <?php
 
-namespace Baezeta\Psql\Connect\Connector;
+namespace Baezeta\Psql\Database;
 
 use PDO;
-use Baezeta\Psql\Connect\Interface\DatabaseInterface;
+use Baezeta\Psql\Database\Connector\ConnectorDTO;
+use Baezeta\Psql\Database\Interface\DatabaseInterface;
+use Baezeta\Psql\Exceptions\DatabaseConnectionException;
+use Baezeta\Psql\Database\Connector\Constants\DeafultConnector;
 
-class DatabaseConnection implements DatabaseInterface
+class DatabasePSQLConnection implements DatabaseInterface
 {
     /**
      * The PDO instance.
@@ -18,7 +21,7 @@ class DatabaseConnection implements DatabaseInterface
      * @var array
      */
     private array $connections = [];
-    
+
     /**
      * The default connection.
      */
@@ -27,6 +30,20 @@ class DatabaseConnection implements DatabaseInterface
     /**
      * @inheritDoc
      */
+
+
+    public function __construct()
+    {
+        $this->start();
+    }
+
+    private function start()
+    {
+        $default = DeafultConnector::zataca();
+        $this->addConnection($default)
+            ->connect($default->database);
+    }
+
     public function addConnection(ConnectorDTO $dto): self
     {
         if ($this->default === null) {
@@ -41,18 +58,25 @@ class DatabaseConnection implements DatabaseInterface
      */
     public function connect(null|string $name = null): PDO
     {
-        $connection = $this->getConnection();
+        $connection = $this->getConnection($name);
         $dsn = "$connection->driver:host=$connection->host;port=$connection->port;dbname=$connection->database";
         $this->pdo = new PDO($dsn, $connection->username, $connection->password);
         $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $this->pdo->setAttribute(0, $connection->database);
         return $this->pdo;
     }
 
     public function getConnection(string $name = null): ConnectorDTO
     {
-        if ($name === null) {
+        if ($name === null)
             $name = $this->default;
-        }
+
+        if (!$this->connections[$name])
+            throw DatabaseConnectionException::create("$name");
+
+
+
+        $this->default = $name;
         return $this->connections[$name];
     }
 
@@ -88,5 +112,14 @@ class DatabaseConnection implements DatabaseInterface
     public function getAllConnections(): array
     {
         return $this->connections;
+    }
+
+    /**
+     * Get all connections
+     * @return array
+     */
+    public function getCurrentConnection(): mixed
+    {
+        return $this->default;
     }
 }

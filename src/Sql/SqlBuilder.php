@@ -3,7 +3,7 @@
 namespace Baezeta\Psql\Sql;
 
 use Baezeta\Psql\Query\QueryBuilder;
-use Baezeta\Psql\Connect\Connector\DatabaseConnection;
+use Baezeta\Psql\Database\DatabasePSQLConnection;
 
 
 class SqlBuilder
@@ -15,11 +15,9 @@ class SqlBuilder
     protected ?QueryBuilder $fetch = null;
 
     public function __construct(
-        protected DatabaseConnection $pdo
     )
     {
         $this->fetch = new QueryBuilder();
-        $this->fetch->setConnection($this->pdo);
     }
 
     public function table($table=null): SqlBuilder
@@ -33,6 +31,13 @@ class SqlBuilder
         $sql =  "SELECT * FROM $this->table where $column = ?";
         $response = $this->fetch->prepareStatement($sql, [$value]);
         return $response;
+    }
+
+    public function all(?string $table = null)
+    {
+        $table = $table ?? $this->table;
+        $sql = "SELECT * FROM $table";
+        return $this->fetch->prepareStatement($sql, []);
     }
 
 }

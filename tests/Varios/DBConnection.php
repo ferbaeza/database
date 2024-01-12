@@ -1,18 +1,16 @@
 <?php
 
-namespace Tests\Tests;
+namespace Tests\Varios;
 
-use Baezeta\Psql\Connect\Connector\ConnectorDTO;
-use Baezeta\Psql\Connect\Connector\DatabaseConnection;
+use Baezeta\Psql\Database\DatabasePSQLConnection;
+use Baezeta\Psql\Database\Connector\ConnectorDTO;
+
 
 class DBConnection
 {
     public static function newConnection()
     {
-        $dto = self::getConnector();
-        $connection = new DatabaseConnection();
-        $connection->addConnection($dto)
-        ->connect();
+        $connection = new DatabasePSQLConnection();
         return $connection;
     }
     

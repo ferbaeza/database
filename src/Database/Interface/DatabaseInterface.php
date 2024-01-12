@@ -1,9 +1,9 @@
 <?php
 
-namespace Baezeta\Psql\Connect\Interface;
+namespace Baezeta\Psql\Database\Interface;
 
 use PDO;
-use Baezeta\Psql\Connect\Connector\ConnectorDTO;
+use Baezeta\Psql\Database\Connector\ConnectorDTO;
 
 interface DatabaseInterface
 {
@@ -16,18 +16,18 @@ interface DatabaseInterface
 
     /**
      * Connect to the database
-     * @param  null|string $name
+     * @param  null|string $name of the database
      * @return PDO
      */
     public function connect(null|string $name): PDO;
-    
+
 
     /**
      * Close Connection to the database
      * @return void
      */
     public function closeConnection(): void;
-    
+
     /**
      * Get the value of pdo
      * @return \PDO

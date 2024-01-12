@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Tests;
+namespace Tests\Varios;
 
 use Baezeta\Psql\Model\Model;
 
