@@ -18,7 +18,7 @@ class Console
     }
     public function run(Input $argv)
     {
-        $this->doWrite('start');
+        $this->doWrite($argv->getOption('hello'));
         $this->end = microtime(true);
         dd($this->end, $this->start, $this->end - $this->start,$argv, 23);
     }

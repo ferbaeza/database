@@ -4,10 +4,10 @@ namespace Baezeta\Psql\Console;
 
 class Input
 {
-    private array $argv;
+    private array $tokens;
 
     public function __construct(
-        ?array $argv = null,
+        ?array $tokens = null,
     )
     {
         $this->run();
@@ -21,8 +21,19 @@ class Input
         }
         // strip the application name
         array_shift($argv);
-        $this->argv = $argv;
+        $this->tokens = $argv;
         return $this;
+    }
+
+    public function getTokens(): array
+    {
+        return $this->tokens;
+    }
+
+    public function getOption()
+    {
+        $all = implode('-', $this->tokens);
+        return $all;
     }
 }
 
