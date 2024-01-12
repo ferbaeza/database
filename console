@@ -1,0 +1,7 @@
+<?php
+define('START', microtime(true));
+
+require __DIR__ . '/vendor/autoload.php';
+
+$console = new Baezeta\Psql\Console\Console(START);
+$console->run(new Baezeta\Psql\Console\Input());
