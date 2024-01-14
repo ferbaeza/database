@@ -7,21 +7,18 @@ class Input
     private array $tokens;
 
     public function __construct(
-        ?array $tokens = null,
-    )
-    {
+    ) {
         $this->run();
     }
 
     public function run()
     {
-        $argv ??= $_SERVER['argv'] ?? [];
-        if (count($argv) < 2) {
-            $argv[] = '--help';
+        $this->tokens ??= $_SERVER['argv'] ?? [];
+        if (count($this->tokens) < 2) {
+            $this->tokens[] = '--help';
         }
         // strip the application name
-        array_shift($argv);
-        $this->tokens = $argv;
+        array_shift($this->tokens);
         return $this;
     }
 
@@ -36,4 +33,3 @@ class Input
         return $all;
     }
 }
-

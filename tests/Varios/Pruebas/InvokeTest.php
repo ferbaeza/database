@@ -9,7 +9,7 @@ class InvokeTest extends TestCase
     /** $@test */
     public function invoke()
     {
-        $test = new TestInvoke;
+        $test = new TestInvoke();
         $expected = 'Hola';
         $this->assertTrue(is_string($test()));
         $this->assertEquals($expected, $test());

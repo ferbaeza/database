@@ -12,6 +12,6 @@ class BaseException extends Exception
     {
         $message = static::$messages[static::class];
         $finalMessage = str_replace('%s', $str, $message);
-        return new static($finalMessage);
+        return new self($finalMessage);
     }
 }

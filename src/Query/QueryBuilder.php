@@ -3,11 +3,10 @@
 namespace Baezeta\Psql\Query;
 
 use PDO;
-use PDOStatement;
 use Baezeta\Psql\Model\Model;
 use Baezeta\Psql\Database\DatabasePSQLConnection;
 
-class QueryBuilder 
+class QueryBuilder
 {
     protected ?DatabasePSQLConnection $connection;
     protected ?string $connectionName = null;
@@ -18,10 +17,11 @@ class QueryBuilder
         $this->connection = new DatabasePSQLConnection();
     }
 
-    public function prepareStatement(string $sql= null, array $params =[]): array
+    public function prepareStatement(string $sql = null, array $params = []): array
     {
         $pdo = $this->connection->getDriver();
         $pdo = $this->connection->connect($this->connectionName);
+        $pdo = DatabasePSQLConnection::connect($this->connectionName);
         $statement = $pdo->prepare($sql);
         $statement->setFetchMode(PDO::FETCH_ASSOC);
         $statement->execute($params);

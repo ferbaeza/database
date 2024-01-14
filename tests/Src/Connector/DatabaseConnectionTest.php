@@ -15,9 +15,10 @@ class DatabaseConnectionTest extends TestCase
         $connection = new DatabasePSQLConnection();
         $this->assertEquals(DeafultConnector::DATABASE, $connection->getCurrentConnection());
         $this->assertTrue($connection->getDriver() instanceof \PDO);
-        // dd($connection->getCurrentConnection());
+        $connection->setDefault('miconexion');
+        $this->assertEquals('miconexion', $connection->getCurrentConnection());
     }
-    
+
     /** @test*/
     public function deberia_connectar_con_la_base_datos_por_defecto()
     {

@@ -10,7 +10,7 @@ class ConnectorDTO
         public readonly string $port,
         public readonly string $database,
         public readonly string $username,
-        public readonly ?string $password,
+        public ?string $password,
     ) {
     }
 

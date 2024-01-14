@@ -3,8 +3,6 @@
 namespace Baezeta\Psql\Sql;
 
 use Baezeta\Psql\Query\QueryBuilder;
-use Baezeta\Psql\Database\DatabasePSQLConnection;
-
 
 class SqlBuilder
 {
@@ -15,12 +13,11 @@ class SqlBuilder
     protected ?QueryBuilder $fetch = null;
 
     public function __construct(
-    )
-    {
+    ) {
         $this->fetch = new QueryBuilder();
     }
 
-    public function table($table=null): SqlBuilder
+    public function table($table = null): SqlBuilder
     {
         $this->table = $table;
         return $this;

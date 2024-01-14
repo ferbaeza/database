@@ -12,15 +12,20 @@ class Console
     private float $end;
     public function __construct(
         private float $start
-    )
-    {
-        return $this;
+    ) {
     }
+
+    public static function bootsrap(?float $start = null)
+    {
+        $start ??= microtime(true);
+        return new Console($start);
+    }
+
     public function run(Input $argv)
     {
-        $this->doWrite($argv->getOption('hello'));
+        $this->doWrite($argv->getOption());
         $this->end = microtime(true);
-        dd($this->end, $this->start, $this->end - $this->start,$argv, 23);
+        dd($this->end, $this->start, $this->end - $this->start, $argv, 23);
     }
 
 

@@ -12,8 +12,7 @@ class Finder
     private static array $clases = [];
 
     public function __construct(
-    )
-    {
+    ) {
     }
 
     public static function findSchemas(?string $path = null): array
@@ -31,8 +30,8 @@ class Finder
             $this->recorreFichero($archivo);
         }
     }
-    
-    public function recorreDirectorio(string $directorio):void
+
+    public function recorreDirectorio(string $directorio): void
     {
         // Buscar archivos PHP en el directorio
         foreach (glob($directorio . '/*.php') as $archivo) {

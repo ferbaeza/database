@@ -5,7 +5,6 @@ namespace Baezeta\Psql\Model;
 use Baezeta\Psql\Sql\SqlBuilder;
 use Baezeta\Psql\Query\QueryBuilder;
 
-
 abstract class Model
 {
     protected array $row;
@@ -13,7 +12,7 @@ abstract class Model
     protected ?string $table;
     protected string $primaryKey = 'id';
     protected ?string $connection = null;
-    protected ?QueryBuilder $builder= null;
+    protected ?QueryBuilder $builder = null;
     protected ?SqlBuilder $sql = null;
 
     public function __construct()
@@ -35,7 +34,7 @@ abstract class Model
 
     public function save()
     {
-        $columns = implode(',',array_keys($this->row));
+        $columns = implode(',', array_keys($this->row));
         $data = array_values($this->row);
         $values = implode(',', array_fill(0, count($this->row), '?'));
         $sql = "INSERT INTO $this->table ($columns) VALUES ($values)";

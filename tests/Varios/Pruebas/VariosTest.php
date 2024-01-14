@@ -3,10 +3,44 @@
 namespace Tests\Varios\Pruebas;
 
 use Tests\TestCase;
+use Tests\Varios\Pruebas\Clases\Hijo;
 
 class VariosTest extends TestCase
 {
     /** @test */
+    public function class_one_parent_abstract()
+    {
+        // $this->markTestSkipped('No se puede instanciar una clase abstracta');
+        $t = new Hijo();
+        $t->run();
+        $this->assertEquals(1, 1);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     public function varios()
     {
         $width = getenv('COLUMNS');

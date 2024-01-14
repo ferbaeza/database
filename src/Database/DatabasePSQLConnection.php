@@ -68,14 +68,13 @@ class DatabasePSQLConnection implements DatabaseInterface
 
     public function getConnection(string $name = null): ConnectorDTO
     {
-        if ($name === null)
+        if ($name === null) {
             $name = $this->default;
+        }
 
-        if (!$this->connections[$name])
+        if (!$this->connections[$name]) {
             throw DatabaseConnectionException::create("$name");
-
-
-
+        }
         $this->default = $name;
         return $this->connections[$name];
     }
@@ -112,6 +111,17 @@ class DatabasePSQLConnection implements DatabaseInterface
     public function getAllConnections(): array
     {
         return $this->connections;
+    }
+
+    /**
+     * Get all connections
+     * @param string  $name
+     * @return self
+     */
+    public function setDefault(string $name): self
+    {
+        $this->default = $name;
+        return $this;
     }
 
     /**
